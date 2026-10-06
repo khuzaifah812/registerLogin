@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Khuzaifah AI</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: rgb(51, 73, 122);
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px;
+    }
+    #output {
+      margin-top: 20px;
+      color: rgb(9, 231, 9);
+    }
+  </style>
+</head>
+<body>
+
+<h1>Khuzaifah Personal AI </h1>
+
+<input id="userInput" placeholder="Ask about Khuzaifah...">
+<button onclick="askAI()">Ask</button>
+
+<div id="output"></div>
+
+<script>
+const data = {
+  "who is khuzaifah": "Khuzaifah is a software engineering student skilled in HTML, CSS, JavaScript and Python.",
+  "skills": "HTML, CSS, JavaScript, Python",
+  "what can he do": "He can build websites, simple apps, and learning AI projects.",
+  "projects": "School system project, login systems, and HTML dashboards."
+};
+
+function askAI() {
+  let input = document.getElementById("userInput").value.toLowerCase().trim();
+  let response = data[input] || "I only know information about Khuzaifah.";
+  document.getElementById("output").innerText = response;
+}
+</script>
+
+</body>
+</html>
