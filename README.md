@@ -1,2 +1,2 @@
-# kamcoder.AI
-its about kamcoder AI
+its a registration system
+
