@@ -1,0 +1,14 @@
+{% extends 'accounts/base.html' %}
+{% block title %}Verify Code{% endblock %}
+
+{% block content %}
+<h1>Enter Verification Code</h1>
+<p>Check your email for a 5-character code.</p>
+
+<form method="post">
+    {% csrf_token %}
+    <label>Code</label>
+    <input type="text" name="code" maxlength="5" required style="text-transform:uppercase">
+    <button type="submit" class="btn">Verify</button>
+</form>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'accounts/base.html' %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h1 class="welcome">Welcome {{ student.full_name }} to Kamcoder Registration system</h1>
+
+<div class="profile-card">
+    <div class="photo-box">
+        {% if student.passport_photo and student.passport_photo.name %}
+            <img src="{{ student.passport_photo.url }}" class="passport" alt="Photo">
+        {% else %}
+            <div class="passport no-photo">No Photo</div>
+        {% endif %}
+    </div>
+    <div class="info-box">
+        <p><strong>First Name:</strong> {{ student.first_name|default:"—" }}</p>
+        <p><strong>Last Name:</strong> {{ student.last_name|default:"—" }}</p>
+        <p><strong>Username:</strong> {{ student.username }}</p>
+        <p><strong>Email:</strong> {{ student.email }}</p>
+        <p><strong>Gender:</strong> {{ student.get_gender_display|default:"—" }}</p>
+        <p><strong>Age:</strong> {{ student.age|default:"—" }}</p>
+        <p><strong>Location:</strong> {{ student.location|default:"—" }}</p>
+        <p><strong>Telephone:</strong> {{ student.telephone|default:"—" }}</p>
+        <p><strong>Registered:</strong> {{ student.date_joined|date:"d M Y" }}</p>
+        {% if student.academic_documents and student.academic_documents.name %}
+            <p><strong>Documents:</strong>
+                <a href="{{ student.academic_documents.url }}" target="_blank">View</a>
+            </p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

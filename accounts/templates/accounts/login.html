@@ -1,0 +1,18 @@
+{% extends 'accounts/base.html' %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<h1>Login</h1>
+<form method="post">
+    {% csrf_token %}
+    <label>Username or Email</label>
+    <input type="text" name="identifier" required>
+
+    <label>Password</label>
+    <input type="password" name="password" required>
+
+    <button type="submit" class="btn">Login</button>
+    <p><a href="{% url 'forgot_password' %}">Forgot password?</a></p>
+    <p>New user? <a href="{% url 'register' %}">Register</a></p>
+</form>
+{% endblock %}

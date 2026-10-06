@@ -1,0 +1,41 @@
+{% extends 'accounts/base.html' %}
+{% block title %}Admin{% endblock %}
+
+{% block content %}
+<h1>Admin Dashboard</h1>
+<a href="{% url 'admin_register_student' %}" class="btn">+ Register Student</a>
+
+<table class="student-table">
+    <thead>
+        <tr>
+            <th>Photo</th><th>Name</th><th>Username</th><th>Email</th>
+            <th>Gender</th><th>Age</th><th>Location</th><th>Phone</th><th>Docs</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for s in students %}
+        <tr>
+            <td>
+                {% if s.passport_photo and s.passport_photo.name %}
+                    <img src="{{ s.passport_photo.url }}" class="thumb" alt="">
+                {% else %}—{% endif %}
+            </td>
+            <td>{{ s.full_name }}</td>
+            <td>{{ s.username }}</td>
+            <td>{{ s.email }}</td>
+            <td>{{ s.get_gender_display|default:"—" }}</td>
+            <td>{{ s.age|default:"—" }}</td>
+            <td>{{ s.location|default:"—" }}</td>
+            <td>{{ s.telephone|default:"—" }}</td>
+            <td>
+                {% if s.academic_documents and s.academic_documents.name %}
+                    <a href="{{ s.academic_documents.url }}" target="_blank">View</a>
+                {% else %}—{% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="9">No students yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

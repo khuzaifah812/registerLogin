@@ -1,0 +1,129 @@
+{% extends 'accounts/base.html' %}
+{% block title %}Register - Kamcoder{% endblock %}
+
+{% block content %}
+<h1>Student Registration</h1>
+
+<form method="post" enctype="multipart/form-data" id="registerForm" novalidate>
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+        <div class="field-error-box">
+            {% for error in form.non_field_errors %}
+                <p class="field-error">{{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="grid">
+        <div class="field">
+            <label>First Name</label>
+            {{ form.first_name }}
+            {% for error in form.first_name.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+        </div>
+
+        <div class="field">
+            <label>Last Name</label>
+            {{ form.last_name }}
+            {% for error in form.last_name.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+        </div>
+
+        <div class="field">
+            <label>Gender</label>
+            {{ form.gender }}
+            {% for error in form.gender.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+        </div>
+
+        <div class="field">
+            <label>Age</label>
+            {{ form.age }}
+            {% for error in form.age.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+        </div>
+
+        <div class="field">
+            <label>Location</label>
+            {{ form.location }}
+            {% for error in form.location.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+        </div>
+
+        <div class="field">
+            <label>Telephone</label>
+            {{ form.telephone }}
+            {% for error in form.telephone.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+        </div>
+
+        <div class="field">
+            <label>Email</label>
+            {{ form.email }}
+            {% for error in form.email.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+        </div>
+
+        <div class="field">
+            <label>Username</label>
+            {{ form.username }}
+            {% for error in form.username.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+        </div>
+
+        <div class="field">
+            <label>Passport Photo</label>
+            {{ form.passport_photo }}
+            {% for error in form.passport_photo.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+        </div>
+
+        <div class="field">
+            <label>Academic Documents</label>
+            {{ form.academic_documents }}
+            {% for error in form.academic_documents.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+        </div>
+
+        <div class="field">
+            <label>Password</label>
+            {{ form.password1 }}
+            <small class="help-text">Min 8 characters, not too common, not all numbers.</small>
+            {% for error in form.password1.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+        </div>
+
+        <div class="field">
+            <label>Confirm Password</label>
+            {{ form.password2 }}
+            {% for error in form.password2.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+        </div>
+    </div>
+
+    <button type="submit" class="btn">Register</button>
+    <p>Already registered? <a href="{% url 'login' %}">Login here</a></p>
+</form>
+
+<script>
+document.getElementById('registerForm').addEventListener('submit', function (e) {
+    let hasError = false;
+    document.querySelectorAll('.js-error').forEach(el => el.remove());
+    document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+
+    function showError(fieldName, message) {
+        const field = document.querySelector(`[name="${fieldName}"]`);
+        if (!field) return;
+        field.classList.add('input-error');
+        const err = document.createElement('p');
+        err.className = 'field-error js-error';
+        err.textContent = message;
+        field.parentNode.appendChild(err);
+        hasError = true;
+    }
+
+    const p1 = document.querySelector('input[name="password1"]').value;
+    const p2 = document.querySelector('input[name="password2"]').value;
+    const email = document.querySelector('input[name="email"]').value;
+    const age = document.querySelector('input[name="age"]').value;
+    const tel = document.querySelector('input[name="telephone"]').value;
+
+    if (p1.length < 8) showError('password1', 'Password must be at least 8 characters.');
+    if (p1 !== p2) showError('password2', 'Passwords do not match.');
+    if (email && !/^\S+@\S+\.\S+$/.test(email)) showError('email', 'Enter a valid email address.');
+    if (age && (isNaN(age) || age < 1 || age > 120)) showError('age', 'Enter a valid age.');
+    if (tel && !/^[0-9+\-\s]{7,20}$/.test(tel)) showError('telephone', 'Enter a valid phone number.');
+
+    if (hasError) e.preventDefault();
+});
+</script>
+{% endblock %}
